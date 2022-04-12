@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/BrickBreaker/brick_breaker_environment.unity
+    guid: ca7abc6fad99d2e4fb1186744481ceaf
   m_configObjects: {}
