@@ -19,9 +19,9 @@ public class BrickManager : MonoBehaviour
 
     public void SetBricks()
     {
-        for (int i = 0; i < bricks.Length; i++)
+        foreach (Transform t in transform)
         {
-            Destroy(bricks[i]);
+            Destroy(t.gameObject);
         }
 
         for (int y = 0; y < verticalCells; y++)
@@ -32,6 +32,8 @@ public class BrickManager : MonoBehaviour
                 newBrick.transform.position = new Vector3(topLeft.x + x * cellDimensions.x,
                     topLeft.y + y * cellDimensions.y, 0);
                 newBrick.transform.parent = this.transform;
+
+                bricks[(y * verticalCells) + x] = newBrick;
             }
         }
     }
@@ -47,7 +49,6 @@ public class BrickManager : MonoBehaviour
                 bricksLeft++;
             }
         }
-
         return bricksLeft;
     }
 
@@ -63,6 +64,6 @@ public class BrickManager : MonoBehaviour
             }
         }
 
-        return (float)bricksLeft / bricks.Length;
+        return (1.0f - (float)bricksLeft / bricks.Length);
     }
 }

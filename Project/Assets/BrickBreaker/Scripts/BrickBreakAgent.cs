@@ -29,7 +29,7 @@ public class BrickBreakAgent : Agent
 
         // Reset Ball
         Target.localPosition = Vector3.zero;
-        targetRB.velocity = new Vector3(Random.value * 4 - 2, Random.value * -2 - 2, 0);
+        targetRB.velocity = new Vector3(Random.value * 8 - 4, Random.value * -4 - 4, 0);
 
         brickManager.SetBricks();
     }
@@ -42,11 +42,9 @@ public class BrickBreakAgent : Agent
 
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
-        sensor.AddObservation(rBody.velocity.z);
 
         // Ball evlocity
         sensor.AddObservation(targetRB.velocity.x);
-        sensor.AddObservation(targetRB.velocity.z);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -54,7 +52,7 @@ public class BrickBreakAgent : Agent
         // Actions, size = 1
         Vector3 controlSignal = Vector3.zero;
         controlSignal.x = actionBuffers.ContinuousActions[0];
-        rBody.AddForce(controlSignal * forceMultiplier);
+        rBody.velocity = (controlSignal * forceMultiplier);
 
         // Reached target
         if (brickManager.BricksRemaining() <= 0)
@@ -64,8 +62,9 @@ public class BrickBreakAgent : Agent
         }
 
         // Ball hit Floor
-        else if (Target.transform.localPosition.y < -5)
+        else if (Target.transform.position.y < -5)
         {
+            SetReward(brickManager.GetReward());
             EndEpisode();
         }
     }
