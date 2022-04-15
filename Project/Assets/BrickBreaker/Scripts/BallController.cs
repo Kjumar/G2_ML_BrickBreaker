@@ -18,6 +18,10 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (rb.velocity.magnitude > 12)
+        {
+            rb.velocity = rb.velocity.normalized * 12;
+        }
         if (Mathf.Abs(rb.velocity.x) <= 1)
         {
             rb.velocity = new Vector3(2 * flipX, rb.velocity.y, 0);
